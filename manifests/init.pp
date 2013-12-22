@@ -1,4 +1,3 @@
-
 class oracle_instant_client{
 
     if $user == undef { fail("'user' not defined") }
@@ -46,6 +45,7 @@ class oracle_instant_client{
 	command => "wget ${tnsnames_url} -O ${oracle_source_path}/tnsnames.ora",
 	creates => "${oracle_source_path}/tnsnames.ora"
     }
+    ->
     exec { 'oracle_basic':
 	command => "wget ${oracle_basic_url} -O ${oracle_source_path}/${oracle_basic_filename}.rpm",
 	creates => "${oracle_source_path}/${oracle_basic_filename}.rpm"
@@ -60,9 +60,7 @@ class oracle_instant_client{
 	command => "wget ${oracle_sqlplus_url} -O ${oracle_source_path}/${oracle_sqlplus_filename}.rpm",
 	creates => "${oracle_source_path}/${oracle_sqlplus_filename}.rpm"
     }
-
-  # INSTALLATION
-  # install client
+  ->
   exec {"rpm -i ${oracle_install_path}/${oracle_basic_filename}.rpm":
 	cwd => 		$oracle_install_path,
 	onlyif => 	"test `rpm -qa | grep -c ${oracle_basic_filename}` = '0'",
