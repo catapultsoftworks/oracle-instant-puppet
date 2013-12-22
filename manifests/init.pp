@@ -36,6 +36,7 @@ class oracle_instant_client{
 	command => "wget ${ldap_ora_url} -O ${oracle_source_path}/ldap.ora",
 	creates => "${oracle_source_path}/ldap.ora"
     }
+    ->
     exec { 'sqlnet.ora':
 	command => "wget ${sqlnet_ora_url} -O ${oracle_source_path}/sqlnet.ora",
 	creates => "${oracle_source_path}/sqlnet.ora"
